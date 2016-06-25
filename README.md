@@ -14,7 +14,7 @@ secret-box
 
 Encrypt and decrypt secrets. Built on AES-256-GCM and Scrypt for now, may change later.
 
-Sponsored by [Exodus](http://www.exodus.io/) Bitcoin and Ethereum wallet.
+> Sponsored by [Exodus](http://www.exodus.io/) Bitcoin and Ethereum wallet.
 
 
 ## Install

@@ -29,7 +29,9 @@
     "url": "https://github.com/jprichardson/secret-box.git"
   },
   "scripts": {
-    "test": "standard && tape test/*.js | tap-spec"
+    "lint": "standard",
+    "unit": "tape test/*.js | tap-spec",
+    "test": "npm run lint && npm run unit"
   },
   "dependencies": {
     "scryptsy": "^2.0.0"

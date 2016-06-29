@@ -34,6 +34,7 @@
     "test": "npm run lint && npm run unit"
   },
   "dependencies": {
-    "scryptsy": "^2.0.0"
+    "scryptsy": "^2.0.0",
+    "varstruct": "^5.2.0"
   }
 }

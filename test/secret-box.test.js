@@ -8,7 +8,7 @@ test('encrypt / decrypt', function (t) {
   const passphrase = 'open sesame'
   const message = new Buffer('The secret launch code is 1234.')
 
-  const message2 = secretBox.decrypt(passphrase, secretBox.encrypt(passphrase, message))
+  const message2 = secretBox.decrypt(secretBox.encrypt(message, passphrase), passphrase)
   t.is(message.toString('hex'), message2.toString('hex'), 'encrypt / decrypt message')
 
   t.end()
@@ -20,7 +20,7 @@ test('encrypt / decrypt (buffer phassphrase)', function (t) {
   const passphrase = new Buffer('open sesame 2')
   const message = new Buffer('The secret launch code is 1234.')
 
-  const message2 = secretBox.decrypt(passphrase, secretBox.encrypt(passphrase, message))
+  const message2 = secretBox.decrypt(secretBox.encrypt(message, passphrase), passphrase)
   t.is(message.toString('hex'), message2.toString('hex'), 'encrypt / decrypt message')
 
   t.end()
@@ -33,10 +33,12 @@ test('encrypt / decrypt (tune up N in scrypt)', function (t) {
   const passphrase = new Buffer('open sesame 2')
   const message = new Buffer('The secret launch code is 1234.')
 
-  const data = secretBox.encrypt(passphrase, message, { n: Math.pow(2, 16) })
-  t.is(data.n, Math.pow(2, 16), 'n is set properly')
+  const n = Math.pow(2, 16)
+  const data = secretBox.encrypt(message, passphrase, { n: n })
+  const dataParams = secretBox.struct.decode(data)
+  t.is(dataParams.n, Math.log2(n)) // <--- encoded as just power of 2.
 
-  const message2 = secretBox.decrypt(passphrase, data)
+  const message2 = secretBox.decrypt(data, passphrase)
   t.is(message.toString('hex'), message2.toString('hex'), 'encrypt / decrypt message')
 
   console.timeEnd('scrypt-n')
@@ -48,12 +50,13 @@ test('encrypt / decrypt (set salt)', function (t) {
 
   const passphrase = new Buffer('open sesame 2')
   const message = new Buffer('The secret launch code is 1234.')
-  const salt = crypto.randomBytes(32)
+  const salt = crypto.randomBytes(16)
 
-  const data = secretBox.encrypt(passphrase, message, { n: 512, salt: salt })
-  t.deepEqual(data.salt, salt, 'salt set')
+  const data = secretBox.encrypt(message, passphrase, { n: 512, salt: salt })
+  const dataParams = secretBox.struct.decode(data)
+  t.deepEqual(dataParams.salt, salt)
 
-  const message2 = secretBox.decrypt(passphrase, data)
+  const message2 = secretBox.decrypt(data, passphrase)
   t.is(message.toString('hex'), message2.toString('hex'), 'encrypt / decrypt message')
 
   delete data.secret

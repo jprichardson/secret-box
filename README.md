@@ -31,8 +31,8 @@ var secretBox = require('secret-box')
 const passphrase = new Buffer('open sesame 2')
 const message = new Buffer('The secret launch code is 1234.')
 
-const secretData = secretBox.encrypt(passphrase, message)
-const message2 = secretBox.decrypt(passphrase, secretData)
+const secret = secretBox.encrypt(message, passphrase)
+const message2 = secretBox.decrypt(secret, passphrase)
 
 console.log(message2.toString('utf8'))
 // => The secret launch code is 1234.

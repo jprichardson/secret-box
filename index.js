@@ -73,7 +73,7 @@ function encrypt (message, passphrase, opts) {
   // don't want to return this so that the user doesn't accidentally store it
   delete stretchedData.key
 
-  let data = Object.assign({}, stretchedData, secretData)
+  let data = Object.assign({ version: 0 }, stretchedData, secretData)
 
   // change n
   data.n = Math.log2(data.n)

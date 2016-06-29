@@ -1,7 +1,7 @@
 {
   "name": "secret-box",
   "description": "Encrypt and decrypt secrets.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "JP Richardson <jprichardson@gmail.com>",
   "bugs": {
     "url": "https://github.com/jprichardson/secret-box/issues"

@@ -1,3 +1,7 @@
+0.1.1 / 2016-06-29
+------------------
+- explicitly encode version 0
+
 0.1.0 / 2016-06-29
 ------------------
 - **Breaking**: return type of encrypt is now a `Buffer` and not and not an `object`.
